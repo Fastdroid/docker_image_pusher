@@ -54,7 +54,7 @@ jobs:
                 new_image_name_tag=""
             fi
         
-            new_image=""
+            new_image="${ALIYUN_REGISTRY}/"
             if [ ! -z "${name_space}" ];then
                 new_image="${new_image}${name_space}/"
             fi
