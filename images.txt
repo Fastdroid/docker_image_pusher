@@ -2,4 +2,16 @@ nginx
 kasmweb/nginx:1.25.3
 xhofe/alist:latest
 --platform=linux/arm64 xiaoyaliu/alist
+
+xiaoyaliu/alist
 cym1102/nginxwebui:latest
+registry:latest
+registry:2
+redis:7-bullseye
+postgres:15-bullseye
+zookeeper:3.9.2
+tdengine/tdengine:3.2.3.0
+joxit/docker-registry-ui:latest
+joxit/docker-registry-ui:2.5.4
+
+
