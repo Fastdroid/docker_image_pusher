@@ -13,5 +13,5 @@ zookeeper:3.9.2
 tdengine/tdengine:3.2.3.0
 joxit/docker-registry-ui:latest
 joxit/docker-registry-ui:2.5.4
-
+gitea/gitea:latest-rootless
 
