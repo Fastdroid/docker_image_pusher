@@ -5,4 +5,5 @@ zookeeper:3.9.2
 tdengine/tdengine:3.2.3.0
 joxit/docker-registry-ui:2.5.4
 eclipse-temurin:17-jdk-jammy
+portainer/portainer-ce:2.19.5
 
