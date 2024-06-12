@@ -29,14 +29,10 @@ jobs:
         docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
         while IFS= read -r line; do
             [[ -z "$line" ]] && continue
-            echo "docker pull $line"
-            docker pull $line
+            echo ""
             platform=$(echo "$line" | awk -F'--platform[ =]' '{if (NF>1) print $2}' | awk '{print $1}')
-            echo "platform is $platform"
-            echo "platform_prefix is $platform_prefix"
             # 获取镜像的完整名称，例如kasmweb/nginx:1.25.3（命名空间/镜像名:版本号）
             image=$(echo "$line" | awk '{print $NF}')
-            echo "image=${image}"
             # 获取 镜像名:版本号  例如nginx:1.25.3
             image_name_tag=$(echo "$image" | awk -F'/' '{print $NF}')
             # 获取命名空间  例如kasmweb
@@ -54,23 +50,37 @@ jobs:
                 new_image_name_tag=""
             fi
         
-            new_image="${ALIYUN_REGISTRY}/"
+            new_image=""
             if [ ! -z "${name_space}" ];then
                 new_image="${new_image}${name_space}/"
             fi
             if [ -z "$platform" ]; then
-                new_image="${new_image}${image_name}:"
+                new_image="${new_image}${image_name}"
             else
-                new_image="${new_image}${image_name}-${platform//\//_}:"
+                new_image="${new_image}${image_name}-${platform//\//_}"
             fi
+            
+            TARGET_REGISTRY_HTTP_STATUS=$(curl -u "${ALIYUN_REGISTRY_USER}:${ALIYUN_REGISTRY_PASSWORD}" -o /dev/null -s -w "%{http_code}\n" https://${ALIYUN_REGISTRY}/v2/${new_image}/tags/list)
+        
             if [ -z "${new_image_name_tag}" ];then
-                new_image="${new_image}latest"
+                new_image="${new_image}:latest"
             else
-                new_image="${new_image}${new_image_name_tag}"
+                new_image="${new_image}:${new_image_name_tag}"
+            fi
+            
+            new_image="${ALIYUN_REGISTRY}/${new_image}"
+            
+            echo "$line  ->  ${new_image}"
+            
+            if [ "200" = "${TARGET_REGISTRY_HTTP_STATUS}" ];then
+                echo "${new_image} has pushed, ignore!"
+                continue
             fi
         
+            echo "docker pull $line"
+            docker pull $line || continue
             echo "docker tag $image $new_image"
-            docker tag $image $new_image
+            docker tag $image $new_image || continue
             echo "docker push $new_image"
             docker push $new_image
         done < images.txt
