@@ -1,3 +1,4 @@
+docker:dind
 ubuntu:jammy
 nginx
 xhofe/alist:latest
