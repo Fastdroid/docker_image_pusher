@@ -1,3 +1,5 @@
+postgres:14-alpine
+redis:7-alpine
 tdengine/tdengine:3.3.0.0
 kasmweb/nginx:1.25.3
 redis:7-bullseye
