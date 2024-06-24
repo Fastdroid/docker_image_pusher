@@ -49,6 +49,9 @@ jobs:
             if [ "${new_image_name_tag}" = "${image}" ];then
                 new_image_name_tag=""
             fi
+            if [ -z "${new_image_name_tag}" ];then
+                new_image_name_tag="latest"
+            fi
         
             new_image=""
             if [ ! -z "${name_space}" ];then
@@ -60,13 +63,9 @@ jobs:
                 new_image="${new_image}${image_name}-${platform//\//_}"
             fi
             
-            TARGET_REGISTRY_HTTP_STATUS=$(curl -u "${ALIYUN_REGISTRY_USER}:${ALIYUN_REGISTRY_PASSWORD}" -o /dev/null -s -w "%{http_code}\n" https://${ALIYUN_REGISTRY}/v2/${new_image}/tags/list)
+            TARGET_REGISTRY_HTTP_STATUS=$(curl -u "${ALIYUN_REGISTRY_USER}:${ALIYUN_REGISTRY_PASSWORD}" -o /dev/null -s -w "%{http_code}\n" https://${ALIYUN_REGISTRY}/v2/${new_image}/manifests/${new_image_name_tag})
         
-            if [ -z "${new_image_name_tag}" ];then
-                new_image="${new_image}:latest"
-            else
-                new_image="${new_image}:${new_image_name_tag}"
-            fi
+            new_image="${new_image}:${new_image_name_tag}"
             
             new_image="${ALIYUN_REGISTRY}/${new_image}"
             
