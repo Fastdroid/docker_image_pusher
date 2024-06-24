@@ -1,3 +1,7 @@
+eclipse-mosquitto:2
+chirpstack/chirpstack-rest-api:4
+chirpstack/chirpstack-gateway-bridge:4
+chirpstack/chirpstack:4
 docker:dind
 ubuntu:jammy
 nginx
