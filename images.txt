@@ -1,3 +1,4 @@
+nodered/node-red:4.0-debian
 eclipse-mosquitto:2
 chirpstack/chirpstack-rest-api:4
 chirpstack/chirpstack-gateway-bridge:4
