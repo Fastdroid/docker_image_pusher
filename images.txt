@@ -1,3 +1,4 @@
+tabbyml/tabby
 nodered/node-red:4.0-debian
 eclipse-mosquitto:2
 chirpstack/chirpstack-rest-api:4
@@ -14,5 +15,6 @@ registry:latest
 registry:2
 joxit/docker-registry-ui:latest
 gitea/gitea:latest-rootless
+
 
 
