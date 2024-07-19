@@ -1,4 +1,4 @@
-nacos/nacos-server:2.3.2
+nacos/nacos-server:v2.3.2
 qingpan/rnacos:v0.5.16
 qingpan/rnacos:v0.5.15
 postgres:14-alpine
